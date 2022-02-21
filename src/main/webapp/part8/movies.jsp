@@ -12,39 +12,40 @@
 </head>
 <body>
 <div class="panel panel-default">
-    <div class="panel-heading">Shop for Computer</div>
+    <div class="panel-heading">Shop for Movie</div>
     <!-- Default panel contents -->
     <form action="${pageContext.request.contextPath}/part8.do" method="post">
+        <input type="hidden" name="action" value="add">
         <table class="table table-striped">
             <tr>
                 <td>
-                    <input type="checkbox" name="computer[]" value="Mac"/>MacBook
+                    <input type="checkbox" name="movie[]" value="Broken"/>Broken
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="checkbox" name="computer[]" value="Microsoft"/>Microsoft
+                    <input type="checkbox" name="movie[]" value="Look Up"/>Look Up
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="checkbox" name="computer[]" value="HP"/>HP
+                    <input type="checkbox" name="movie[]" value="Summer"/>Summer
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="checkbox" name="computer[]" value="Dell"/>Dell
+                    <input type="checkbox" name="movie[]" value="Citizen Kane"/>Citizen Kane
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="checkbox" name="computer[]" value="Alien"/>Alien
+                    <input type="checkbox" name="movie[]" value="Casablanca"/>Casablanca
                 </td>
             </tr>
             <tr>
                 <td align="right"></td>
                 <td><input type="submit" value="Add to Cart"></td>
-                <td><input type="hidden" name="category" value="computer"></td>
+                <td><input type="hidden" name="category" value="movie"></td>
             </tr>
         </table>
     </form>

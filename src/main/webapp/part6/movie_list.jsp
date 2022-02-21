@@ -36,7 +36,7 @@
 
     </table>
     <div style="margin-top: 10px">
-        <a href="${pageContext.request.contextPath}/movie_navigate.jsp">Click here to go back to the main page</a>
+        <a href="${pageContext.request.contextPath}/part6/movie_navigate.jsp">Click here to go back to the main page</a>
     </div>
 </div>
 

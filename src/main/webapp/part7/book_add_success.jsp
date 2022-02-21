@@ -21,6 +21,6 @@
         Book
     </c:if>
     Successfully</h1>
-<a href="${pageContext.request.contextPath}/book_add.jsp">Click here to go back to the main page</a>
+<a href="${pageContext.request.contextPath}/part7/book_add.jsp">Click here to go back to the main page</a>
 </body>
 </html>

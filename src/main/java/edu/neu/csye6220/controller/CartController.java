@@ -10,19 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- * using a  session object to  store and retrieve selected items  from a simple shopping cart application. Shopping
- * cart applications typically allow users to select items from a catalog and place them in a virtual shopping car
- *
- */
-@WebServlet("/part8.do")
-public class StoreController extends HttpServlet {
+@WebServlet("/view_cart.do")
+public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        System.out.println("there");
+        System.out.println("CartController doGet method");
         ObjectMapper objectMapper = new ObjectMapper();
         Object data = session.getAttribute("data");
         Map<String, List<String>> mapper = new HashMap<String, List<String>>();
@@ -35,49 +33,28 @@ public class StoreController extends HttpServlet {
             req.setAttribute("list",all);
         }
 
-        req.getRequestDispatcher("/part8/store.jsp").forward(req,resp);
+        req.getRequestDispatcher("/view_cart.jsp").forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
+        System.out.println("CartController doPost method");
         HttpSession session = req.getSession();
         ObjectMapper objectMapper = new ObjectMapper();
         Object data = session.getAttribute("data");
+        String item = req.getParameter("item");
         Map<String, List<String>> mapper = new HashMap<String, List<String>>();
-        List<String> all = new ArrayList<>();
-        if(action.equals("add")){
-            String category = req.getParameter("category");
-            System.out.println(category);
-            String[] values = req.getParameterValues(category+"[]");
-
-            resp.setCharacterEncoding("UTF-8");
-            resp.setContentType("text/html;charset=UTF-8");
-
-            List<String> list = Arrays.asList(values);
-            if(data!=null){
-                mapper = objectMapper.readValue(String.valueOf(data), new TypeReference<Map<String,  List<String>>>(){});
-            }
-            mapper.put(category,list);
+        if(data!=null){
+            mapper = objectMapper.readValue(String.valueOf(data), new TypeReference<Map<String,  List<String>>>(){});
+            List<String> all = new ArrayList<>();
             for(String key:mapper.keySet()){
+                mapper.get(key).remove(item);
                 all.addAll(mapper.get(key));
             }
-        }else if(action.equals("delete")){
-            String item = req.getParameter("item");
-            if(data!=null){
-                mapper = objectMapper.readValue(String.valueOf(data), new TypeReference<Map<String,  List<String>>>(){});
-                for(String key:mapper.keySet()){
-                    mapper.get(key).remove(item);
-                    all.addAll(mapper.get(key));
-                }
-            }
+            req.setAttribute("list",all);
         }
-
-        req.setAttribute("list",all);
         String json = objectMapper.writeValueAsString(mapper);
         session.setAttribute("data",json);
-
-//        req.getRequestDispatcher("/store.jsp").forward(req,resp);
-        resp.sendRedirect(req.getContextPath()+"/part8.do");
+        req.getRequestDispatcher("/view_cart.jsp").forward(req,resp);
     }
 }

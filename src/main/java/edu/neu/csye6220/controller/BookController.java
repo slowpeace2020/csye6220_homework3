@@ -24,7 +24,7 @@ public class BookController extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        req.getRequestDispatcher("book_add.jsp").forward(req,resp);
+        req.getRequestDispatcher("part7/book_add.jsp").forward(req,resp);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class BookController extends HttpServlet {
             jdbcUtil.insert(sql);
         }
         jdbcUtil.closConn();
-        req.getRequestDispatcher("book_add_success.jsp").forward(req,resp);
+        req.getRequestDispatcher("part7/book_add_success.jsp").forward(req,resp);
     }
 }

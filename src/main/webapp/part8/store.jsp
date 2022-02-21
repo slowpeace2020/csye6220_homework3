@@ -19,43 +19,41 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>- 后台管理系统 -</title>
+    <title>- Shopping Center -</title>
 </head>
 <body>
-<!-- 顶部菜单（来自bootstrap官方Demon）==================================== -->
+<!-- top menu）==================================== -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="" ><i class="fa fa-users"></i> ViewCart</a></li>
+                <li><a href="${pageContext.request.contextPath}/part8.do" ><i class="fa fa-users"></i> ViewCart</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<!-- 左侧菜单选项========================================= -->
+<!-- left menu========================================= -->
 <div class="container-fluid">
     <div class="row-fluie">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <!-- 一级菜单 -->
                 <li class="active">
-                    <a href="#userMeun" onclick="showAtRight('book_list.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
+                    <a href="#userMeun" onclick="showAtRight('part8/book_list.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
                     <i class="fa fa-user"></i>  Books <span class="sr-only"></span></a>
                 </li>
                 <li class="active">
-                    <a href="#userMeun" onclick="showAtRight('book_list.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
+                    <a href="#userMeun" onclick="showAtRight('part8/book_list.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
                         <i class="fa fa-user"></i>  Books <span class="sr-only"></span></a>
                 </li>
                 <li>
-                    <a href="#userMeun" onclick="showAtRight('movies.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
+                    <a href="#userMeun" onclick="showAtRight('part8/movies.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
                         <i class="fa fa-user"></i>  Movies <span class="sr-only"></span></a>
                 </li>
                 <li>
-                    <a href="#userMeun" onclick="showAtRight('computers.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
+                    <a href="#userMeun" onclick="showAtRight('part8/computers.jsp')" class="nav-header menu-first collapsed" data-toggle="collapse">
                         <i class="fa fa-user"></i>  Computers <span class="sr-only"></span></a>
                 </li>
-
-
             </ul>
         </div>
     </div>
@@ -65,57 +63,24 @@
     <div id="content">
         <c:if test="${list.size()>0}">
             <h4>The following item has been added to your shopping cart successfully</h4>
-
-            <div style="margin-bottom: 20px">
-                <c:forEach items="${list}" var="keyword" varStatus="id">
-                    - &nbsp; ${keyword}<br>
-                </c:forEach>
-            </div>
+            <form action="${pageContext.request.contextPath}/part8.do" method="post">
+                <input type="hidden" name="action" value="delete">
+                <div style="margin-bottom: 20px">
+                    <c:forEach items="${list}" var="keyword" varStatus="id">
+                        - &nbsp; ${keyword}<input type="hidden" name="item" value="${keyword}"/>&nbsp;&nbsp;&nbsp;<input type="submit" value="Delete"><br>
+                    </c:forEach>
+                </div>
+            </form>
             <div>
                 <a href="${pageContext.request.contextPath}/part8.do">View Cart</a>&nbsp;&nbsp;
-                <a href="#userMeun" onclick="showAtRight('book_list.jsp')">Books</a>&nbsp;&nbsp;
-                <a href="#userMeun" onclick="showAtRight('movies.jsp')">Movie</a>&nbsp;&nbsp;
-                <a href="#userMeun" onclick="showAtRight('computers.jsp')">Computer</a>
+                <a href="#userMeun" onclick="showAtRight('part8/book_list.jsp')">Books</a>&nbsp;&nbsp;
+                <a href="#userMeun" onclick="showAtRight('part8/movies.jsp')">Movie</a>&nbsp;&nbsp;
+                <a href="#userMeun" onclick="showAtRight('part8/computers.jsp')">Computer</a>
             </div>
         </c:if>
-        <c:if test="${list.size()<1}">
+        <c:if test="${list==null || list.size()<1}">
             <div class="panel panel-default">
-                <div class="panel-heading">Shop for Movie</div>
-                <!-- Default panel contents -->
-                <form action="${pageContext.request.contextPath}/part8.do" method="post">
-                    <table class="table table-striped">
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="movie[]" value="Broken"/>Broken
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="movie[]" value="Look Up"/>Look Up
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="movie[]" value="Summer"/>Summer
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="movie[]" value="Citizen Kane"/>Citizen Kane
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="movie[]" value="Casablanca"/>Casablanca
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"></td>
-                            <td><input type="submit" value="Add to Cart"></td>
-                            <td><input type="hidden" name="category" value="movie"></td>
-                        </tr>
-                    </table>
-                </form>
+                <h4>Oops, your cart is empty ~~ </h4>
             </div>
         </c:if>
     </div>
@@ -186,17 +151,17 @@
                 }
                 //错误状态处理
                 else if (xmlHttp.status == 404){
-                    alert("出错了☹  （错误代码：404 Not Found），……！");
+                    alert("Ooops☹  （Code Error：404 Not Found），……！");
                     /* 对404的处理 */
                     return;
                 }
                 else if (xmlHttp.status == 403) {
-                    alert("出错了☹  （错误代码：403 Forbidden），……");
+                    alert("Ooops☹  （Code Error：403 Forbidden），……");
                     /* 对403的处理 */
                     return;
                 }
                 else {
-                    alert("出错了☹  （错误代码：" + request.status + "），……");
+                    alert("Ooops☹  （Code Error：" + request.status + "），……");
                     /* 对出现了其他错误代码所示错误的处理  */
                     return;
                 }

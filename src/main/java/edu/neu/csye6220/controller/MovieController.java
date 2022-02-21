@@ -24,7 +24,7 @@ public class MovieController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String url =req.getContextPath()+req.getParameter("page_name");
+        String url =req.getContextPath()+"/part6"+req.getParameter("page_name");
         resp.sendRedirect(url);
     }
 
@@ -45,22 +45,20 @@ public class MovieController extends HttpServlet {
             jdbcUtil.insert(sql);
             jdbcUtil.closConn();
 
-            req.getRequestDispatcher("movie_add_success.jsp").forward(req,resp);
+            req.getRequestDispatcher("/part6/movie_add_success.jsp").forward(req,resp);
         }else if(action.equals("search")){
             String name = req.getParameter("keyword");
             String valueType = req.getParameter("search_type");
             try {
                 List<Movie> list = findListByQuery(valueType,name);
-                System.out.println(list);
-                System.out.println(name);
                 req.setAttribute("list",list);
                 req.setAttribute("keyword",name);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+            req.getRequestDispatcher("/part6/movie_list.jsp").forward(req,resp);
         }
 
-        req.getRequestDispatcher("movie_list.jsp").forward(req,resp);
     }
 
 

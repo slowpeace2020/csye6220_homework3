@@ -15,6 +15,7 @@
     <div class="panel-heading">Shop for Books</div>
     <!-- Default panel contents -->
     <form action="${pageContext.request.contextPath}/part8.do" method="post">
+        <input type="hidden" name="action" value="add">
         <table class="table table-striped">
             <tr>
                 <td>
